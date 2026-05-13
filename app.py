@@ -1,42 +1,29 @@
-"""
-Step 3: FastAPI Backend + Frontend (Single Python File)
-=======================================================
-Everything — API routes, HTML, CSS, JS — lives in this one file.
-No templates/ or static/ folders needed.
-
-Run AFTER step1_pca_pipeline.py and step2_knn_training.py.
-
-Install deps:
-    pip install fastapi uvicorn python-multipart pillow numpy scikit-learn joblib
-
-Run:
-    uvicorn app:app --reload
-
-Then open: http://127.0.0.1:8000
-"""
+"""Step 3: FastAPI Backend + Frontend (Single Python File)
+Then open: http://127.0.0.1:8000 """
 
 import io
 import base64
 import numpy as np
 import joblib
 from PIL import Image, ImageOps
-
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-
 # ─── App instance ─────────────────────────────────────────────────────────────
-app = FastAPI(title="Digit Recognition — PCA + KNN")
-
+app = FastAPI(title="Digit Recognition")
 
 # ─── Load model artifacts once at startup ─────────────────────────────────────
-print("Loading model artifacts...")
+
+print("Loading its will take a few seconds")
+
 scaler    = joblib.load("mnist_model/scaler.pkl")
 pca       = joblib.load("mnist_model/pca.pkl")
 knn_model = joblib.load("mnist_model/knn_model.pkl")
-print(f"  KNN (K={knn_model.n_neighbors}) | Scaler | PCA ({pca.n_components_} dims)  — ready.")
-
+print("KNN model is ready with K =", knn_model.n_neighbors)
+print("Data is scaled and PCA is applied")
+print("Reduced to", pca.n_components_, "dimensions")
+print("Everything is set for training/prediction")
 
 # ─── Request / Response schemas (Pydantic) ────────────────────────────────────
 class PredictRequest(BaseModel):
@@ -264,7 +251,6 @@ PAGE = """<!DOCTYPE html>
 <div class="shell">
 
   <header>
-    <div class="badge">FastAPI · PCA · KNN · MNIST</div>
     <h1>Digit<span>.</span>AI</h1>
     <p class="sub">Draw a digit or upload an image — the model will recognise it.</p>
   </header>
@@ -313,14 +299,8 @@ PAGE = """<!DOCTYPE html>
   </div>
 
   <!-- Pipeline steps -->
-  <div class="pipe">
-    <div class="ps">📥<br/>Image</div>     <span class="pa">→</span>
-    <div class="ps">🔲<br/>28×28</div>    <span class="pa">→</span>
-    <div class="ps">📊<br/>Scaler</div>   <span class="pa">→</span>
-    <div class="ps">🔻<br/>PCA</div>      <span class="pa">→</span>
-    <div class="ps">🔍<br/>KNN</div>      <span class="pa">→</span>
-    <div class="ps">✅<br/>Digit</div>
-  </div>
+  
+  
 
 </div>
 

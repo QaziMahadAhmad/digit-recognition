@@ -1,6 +1,5 @@
 """
 Step 1: MNIST Digit Recognition — Data Loading + Scaling + PCA
-==============================================================
 """
 
 import numpy as np
@@ -15,13 +14,15 @@ from sklearn.decomposition import PCA
 print("Loading MNIST (downloads ~11MB on first run)...")
 mnist = fetch_openml("mnist_784", version=1, as_frame=False, parser="auto")
 X, y = mnist.data.astype(float), mnist.target.astype(int)
-print(f"  Shape: {X.shape}  |  Pixel range: [{X.min():.0f}, {X.max():.0f}]")
+print("Dataset Shape:", X.shape)
+print("Pixel Value Range:", X.min(), "to", X.max())
 
 # ─── 2. TRAIN / TEST SPLIT ────────────────────────────────────────────────────
 # MNIST comes pre-split: first 60k = train, last 10k = test
 X_train, X_test = X[:60000], X[60000:]
 y_train, y_test = y[:60000], y[60000:]
-print(f"  Train: {X_train.shape}  |  Test: {X_test.shape}")
+print("Training Data Shape:", X_train.shape)
+print("Testing Data Shape:", X_test.shape)
 
 # ─── 3. SCALING (StandardScaler) ──────────────────────────────────────────────
 # Each of the 784 pixel features gets zero mean and unit variance.
@@ -38,12 +39,17 @@ pca = PCA(n_components=0.95, random_state=42)
 X_train_pca = pca.fit_transform(X_train_scaled)   # fit + transform
 X_test_pca  = pca.transform(X_test_scaled)         # transform only
 
-print(f"  Original dimensions : 784")
-print(f"  PCA dimensions kept : {pca.n_components_}  (95% variance threshold)")
-print(f"  Compression ratio   : {784 / pca.n_components_:.1f}x")
+print("Original number of features:", 784)
+print("Number of PCA components kept:", pca.n_components_)
+print("We kept 95% of the variance")
+print("Compression ratio:", round(784 / pca.n_components_, 1), "times smaller")
 
 # ─── 5. VISUALISE ─────────────────────────────────────────────────────────────
 cumvar = np.cumsum(pca.explained_variance_ratio_) * 100
+
+
+
+#   --   Its Graphs for understanding the best values
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5), facecolor="#0d0d0d")
 fig.suptitle("PCA Analysis — MNIST", color="white", fontsize=16, fontweight="bold")
@@ -112,4 +118,3 @@ print("  X_train_pca.npy  ← transformed training features")
 print("  X_test_pca.npy   ← transformed test features")
 print("  y_train.npy      ← training labels")
 print("  y_test.npy       ← test labels")
-print("\n✅ Step 1 complete. Ready for Step 2: KNN training.")
