@@ -17,9 +17,9 @@ app = FastAPI(title="Digit Recognition")
 
 print("Loading its will take a few seconds")
 
-scaler    = joblib.load("mnist_model/scaler.pkl")
-pca       = joblib.load("mnist_model/pca.pkl")
-knn_model = joblib.load("mnist_model/knn_model.pkl")
+scaler = joblib.load("scaler.pkl")
+pca = joblib.load("pca.pkl")
+knn_model = joblib.load("knn_model.pkl")
 print("KNN model is ready with K =", knn_model.n_neighbors)
 print("Data is scaled and PCA is applied")
 print("Reduced to", pca.n_components_, "dimensions")
@@ -460,4 +460,4 @@ def predict(body: PredictRequest):
 # Or directly:  python app.py
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
