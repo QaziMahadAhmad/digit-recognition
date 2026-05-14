@@ -2,3 +2,4 @@ mnist_model/*.npy
 mnist_model/*.pkl
 mnist_model/*.joblib*.pkl
 *.npy
+*.png
