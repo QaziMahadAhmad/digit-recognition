@@ -1,7 +1,7 @@
 ---
 title: Digit Recognition PCA KNN
 emoji: ✏️
-colorFrom: cyan
+colorFrom: blue
 colorTo: purple
 sdk: docker
 app_port: 7860
