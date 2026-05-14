@@ -1,4 +1,4 @@
-# Handwritten Digit Recognition (MNIST) 
+# Digit Recognition (MNIST) 
 
 This project is a machine learning web application that recognizes handwritten digits (0–9) using the MNIST dataset. It uses **PCA for dimensionality reduction** and **K-Nearest Neighbors (KNN)** as the classifier, deployed with a **Flask web interface**.
 
@@ -17,7 +17,6 @@ This project is a machine learning web application that recognizes handwritten d
 ## 🧠 Tech Stack
 
 - Python
-- Flask
 - Scikit-learn
 - NumPy
 - Pandas
