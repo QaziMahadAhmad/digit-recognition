@@ -10,7 +10,7 @@ pinned: false
 
 <div align="center">
 
-# ✏️ Digit.AI — Handwritten Digit Recognition
+# ✏️ Digit.AI Handwritten Digit Recognition
 
 **A from-scratch machine learning pipeline that recognises handwritten digits in real time.**
 Built with PCA dimensionality reduction + K-Nearest Neighbours — no deep learning, no black box.
@@ -226,7 +226,7 @@ Interactive API docs available at `/docs` (Swagger UI).
 
 ## 👤 Author
 
-**Mahad Ahmad**
+**Qazi Mahad Ahmad**
 - GitHub: [@QaziMahadAhmad](https://github.com/QaziMahadAhmad)
 - Hugging Face: [@Mahad0007](https://huggingface.co/Mahad0007)
 
