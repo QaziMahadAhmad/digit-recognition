@@ -1,22 +1,5 @@
 """
-Step 2: KNN Training with Cross-Validation
-===========================================
-Run AFTER step1_pca_pipeline.py has been executed.
-This script loads the PCA-transformed data, finds the best K,
-trains the final KNN model, evaluates it, and saves it.
-
-Folder structure expected:
-    mnist_model/
-        scaler.pkl
-        pca.pkl
-        X_train_pca.npy
-        X_test_pca.npy
-        y_train.npy
-        y_test.npy
-
-Install deps:
-    pip install scikit-learn numpy matplotlib joblib
-"""
+Step 2: KNN Training with Cross-Validation         """
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -36,9 +19,9 @@ y_train     = np.load("mnist_model/y_train.npy")
 y_test      = np.load("mnist_model/y_test.npy")
 pca         = joblib.load("mnist_model/pca.pkl")
 
-print(f"  Train shape : {X_train_pca.shape}")
-print(f"  Test shape  : {X_test_pca.shape}")
-print(f"  PCA dims    : {X_train_pca.shape[1]}")
+print("Training data shape after PCA:", X_train_pca.shape)
+print("Testing data shape after PCA:", X_test_pca.shape)
+print("Number of PCA dimensions:", X_train_pca.shape[1])
 
 # ─── 2. FIND BEST K VIA CROSS-VALIDATION ─────────────────────────────────────
 # We try multiple K values and use 5-fold stratified cross-validation.
@@ -58,11 +41,12 @@ for k in k_values:
 
 best_k   = k_values[int(np.argmax(cv_scores))]
 best_acc = max(cv_scores)
-print(f"\n  ✅ Best K = {best_k}  (CV accuracy = {best_acc*100:.2f}%)")
+print("\nBest K found:", best_k)
+print("Model achieved", round(best_acc * 100, 2), "% accuracy in cross-validation")
 
 # ─── 3. TRAIN FINAL KNN MODEL ────────────────────────────────────────────────
 # Train on the FULL training set using the best K found above.
-print(f"\nTraining final KNN with K={best_k}...")
+print("Training final KNN model with K =", best_k)
 knn_final = KNeighborsClassifier(n_neighbors=best_k, metric="euclidean", n_jobs=-1)
 knn_final.fit(X_train_pca, y_train)
 
@@ -72,8 +56,8 @@ test_acc = accuracy_score(y_test, y_pred)
 cm       = confusion_matrix(y_test, y_pred)
 per_class_acc = cm.diagonal() / cm.sum(axis=1)
 
-print(f"\n  Test Accuracy : {test_acc*100:.2f}%")
-print("\nClassification Report:")
+print("\nTest Accuracy:", round(test_acc * 100, 2), "%")
+print("Classification Report:")
 print(classification_report(y_test, y_pred, digits=4))
 
 # ─── 6. SAVE THE TRAINED MODEL ───────────────────────────────────────────────
@@ -82,4 +66,4 @@ joblib.dump(knn_final, "mnist_model/knn_model.pkl")
 print("\n=== Saved to mnist_model/ ===")
 print("  knn_model.pkl  ← trained KNN classifier")
 print("  (scaler.pkl and pca.pkl were already saved in Step 1)")
-print("\n✅ Step 2 complete. Ready for Step 3: Flask backend.")
+print("\n Step 2 complete")

@@ -1,5 +1,4 @@
-"""Step 3: FastAPI Backend + Frontend (Single Python File)
-Then open: http://127.0.0.1:8000 """
+"""Step 3: FastAPI Backend + Frontend """
 
 import io
 import base64

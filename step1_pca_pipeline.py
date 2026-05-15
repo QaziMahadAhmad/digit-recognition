@@ -1,6 +1,4 @@
-"""
-Step 1: MNIST Digit Recognition — Data Loading + Scaling + PCA
-"""
+"""  Step 1: MNIST Digit Recognition — Data Loading + Scaling + PCA       """
 
 import numpy as np
 import matplotlib.pyplot as plt
